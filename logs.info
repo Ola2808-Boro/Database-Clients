@@ -1,0 +1,17 @@
+2025-03-12 20:55:16,921 - INFO - Connected to the MySQL
+2025-03-12 20:55:16,923 - INFO - Using database little_lemon_db
+2025-03-12 20:55:16,929 - INFO - End creating database
+2025-03-12 20:55:16,931 - INFO - End inserting database
+2025-03-12 20:55:16,933 - INFO - Columns: ('Hour', 'Num_of_bookings')
+2025-03-12 20:55:16,933 - INFO - (19, 2)
+2025-03-12 20:55:16,933 - INFO - (15, 1)
+2025-03-12 20:55:16,933 - INFO - (17, 1)
+2025-03-12 20:55:16,933 - INFO - (18, 1)
+2025-03-12 20:55:16,934 - INFO - (20, 1)
+2025-03-12 20:55:16,950 - INFO - Columns: ('GuestFullName', 'Status')
+2025-03-12 20:55:16,950 - INFO - ('Anna Iversen', None)
+2025-03-12 20:55:16,950 - INFO - ('Joakim Iversen', None)
+2025-03-12 20:55:16,950 - INFO - ('Vanessa McCarthy', 'Ready to serve')
+2025-03-12 20:55:16,950 - INFO - ('Marcos Romero', 'Preparing Order')
+2025-03-12 20:55:16,950 - INFO - ('Hiroki Yamane', None)
+2025-03-12 20:55:16,950 - INFO - ('Diana Pinto', None)
