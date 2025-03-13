@@ -32,6 +32,19 @@ def connect_to_mysql_pooling():
         logging.info(f"Failed to connect to MySQL")
         return None
 
+def connect_to_mysql_pooling_b():
+    try:
+        db_config = {
+            "user": os.getenv("DB_USER"),
+            "password": os.getenv("DB_PASSWORD"),
+            "host": "localhost",
+        }
+        cnxpooling = MySQLConnectionPool(pool_name="pool_b", pool_size=2, **db_config)
+        logging.info(f"Connected to the MySQL")
+        return cnxpooling
+    except mysql.connector.Error as e:
+        logging.info(f"Failed to connect to MySQL")
+        return None
 
 def connect_to_mysql():
     try:
@@ -216,7 +229,7 @@ def insert_data(connection: MySQLConnection):
     logging.info(f"End inserting database")
 
 
-def peakhours_stored_procedure(connection: MySQLConnection | MySQLConnectionPool):
+def peakhours_stored_procedure(connection: MySQLConnection):
     peakhours = """
         CREATE PROCEDURE IF NOT EXISTS PeakHours()
         BEGIN
@@ -271,22 +284,143 @@ def gueststatus_stored_procedure(connection: MySQLConnection | MySQLConnectionPo
     finally:
         cursor.close()
 
+def insert_guests(pooling):
+    insert_guest1=""" INSERT IGNORE INTO Bookings (TableNo, GuestFirstName, 
+        GuestLastName, BookingSlot, EmployeeID)
+        VALUES (8,'Anees','Java','18:00',6);
+    """
+    insert_guest2=""" INSERT IGNORE INTO Bookings (TableNo, GuestFirstName, 
+        GuestLastName, BookingSlot, EmployeeID)
+        VALUES (5,'Bald','Vin','19:00',6);
+    """
+    insert_guest3=""" INSERT IGNORE INTO Bookings (TableNo, GuestFirstName, 
+        GuestLastName, BookingSlot, EmployeeID)
+        VALUES(12,'Jay','Kon','19:30',6)
+        ;
+    """
+    insert_queries=[insert_guest1,insert_guest2,insert_guest3]
+    for i,query in enumerate(insert_queries):
+        try:
+            connection=pooling.get_connection()
+        except mysql.connector.Error as e:
+            logging.error(f"Problem with creating connection with pooling_b: {e}")
+            pooling.add_connection()
+            connection=pooling.get_connection()
+        finally:
+            logging.info(f'Adding guest: {i}')
+            use_db = """
+                USE  little_lemon_db
+                """
+            cursor = connection.cursor()
+            cursor.execute(use_db)
+            cursor.execute(query)
+            connection.commit()
+            connection.close()
 
-def main(pooling=True):
-    if pooling:
-        pool = connect_to_mysql_pooling()
-        connection = pool.get_connection()
+def dispaly_bookings(pooling):
+    connection=pooling.get_connection()
+    cursor=connection.cursor(buffered=True)
+    query="""
+        SELECT BookingSlot,
+        CONCAT(GuestFirstName, ' ', GuestLastName) AS GuestFullName,
+        Name,
+        Role
+        FROM
+        Bookings NATUTAL JOIN Employees
+        ORDER BY BookingSlot ASC
+        LIMIT 3
+    """
+    cursor.execute(query)
+    results=cursor.fetchall()
+    logging.info(f'Succesfully display 3 bookings')
+    for i,result in enumerate(results):
+        booking_slot,guest_name, name,role=result
+        logging.info(f'Guest: {i} \n Booking slot: {booking_slot} \n guest name: {guest_name}\n assigned to: {name} [{role}] ')
+    cursor.close()
+    connection.close()
+    
+
+
+def create_basic_sales_report_procedure(pooling):
+    basic_sales_report_procedure="""
+        CREATE PROCEDURE IF NOT EXISTS Basic_Sales_Report()
+        BEGIN
+            SELECT SUM(BillAmount) AS Total_sales,
+            AVG(BillAmount) AS Average_sale,
+            MIN(BillAmount) AS Minimum_bill_paid,
+            MAX(BillAmount) AS Maximum_bill_paid
+            FROM Orders;
+        END;
+    """
+    connection=pooling.get_connection()
+    cursor=connection.cursor()
+    cursor.execute(basic_sales_report_procedure)
+    cursor.callproc('Basic_Sales_Report')
+    results=next(cursor.stored_results())
+    dataset=results.fetchall()
+    sum_bills,avg_bills,min_bill,max_bill=dataset[0]
+    logging.info(f'Total sales: {sum_bills}, avg sale: {avg_bills}, min bill paid: {min_bill}, max bill paid: {max_bill}')
+    cursor.close()
+    connection.close()
+    
+def create_report(pooling):
+    query_managers="""
+        SELECT Name, EmployeeID FROM employees WHERE Role='Manager';
+    """
+    hightest_salary="""
+        SELECT Name, Role FROM employees ORDER BY Annual_Salary LIMIT 1;
+    """
+    number_of_guests="""
+        SELECT COUNT(*) as Num_of_guests FROM Bookings WHERE BookingSlot BETWEEN '18:00' AND '20:00';
+    """
+    
+    guest_waiting = """
+        SELECT BookingID, CONCAT(GuestFirstName, ' ', GuestLastName) AS GuestFullName
+        FROM Bookings 
+        ORDER BY BookingSlot;
+     """
+    connection=pooling.get_connection()
+    cursor=connection.cursor()
+    cursor.execute(query_managers)
+    query_managers_results=cursor.fetchall()
+    logging.info(f'The name and EmployeeID of the Little Lemon manager: {query_managers_results}')
+    
+    cursor.execute(hightest_salary)
+    hightest_salary_results=cursor.fetchall()
+    logging.info(f'The name and role of the employee who receives the highest salary: {hightest_salary_results}')
+    
+    cursor.execute(number_of_guests)
+    number_of_guests_results=cursor.fetchall()
+    logging.info(f'The number of guests booked between 18:00 and 20:00: {number_of_guests_results}')
+    
+    cursor.execute(guest_waiting)
+    guest_waiting_results=cursor.fetchall()
+    logging.info(f'All guests waiting to be seated: {guest_waiting_results}')
+    cursor.close()
+    connection.close()
+
+def main(pooling=True,task=3):
+    if task==3:
+        pooling_b=connect_to_mysql_pooling_b()
+        insert_guests(pooling=pooling_b)
+        create_report(pooling=pooling_b)
+        create_basic_sales_report_procedure(pooling=pooling_b)
+        dispaly_bookings(pooling=pooling_b)
     else:
-        connection = connect_to_mysql()
+        if pooling:
+            pool = connect_to_mysql_pooling()
+            connection = pool.get_connection()
+        else:
+            connection = connect_to_mysql()
 
-    if connection:
-        create_db(connection=connection)
-        use_db(connection=connection)
-        create_tables(connection=connection)
-        insert_data(connection=connection)
-        peakhours_stored_procedure(connection=connection)
-        gueststatus_stored_procedure(connection=connection)
-        connection.close()
+        if connection:
+            create_db(connection=connection)
+            use_db(connection=connection)
+            create_tables(connection=connection)
+            insert_data(connection=connection)
+            peakhours_stored_procedure(connection=connection)
+            gueststatus_stored_procedure(connection=connection)
+            connection.close()
 
 
 main()

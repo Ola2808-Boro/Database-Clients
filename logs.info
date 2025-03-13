@@ -1,17 +1,22 @@
-2025-03-12 20:55:16,921 - INFO - Connected to the MySQL
-2025-03-12 20:55:16,923 - INFO - Using database little_lemon_db
-2025-03-12 20:55:16,929 - INFO - End creating database
-2025-03-12 20:55:16,931 - INFO - End inserting database
-2025-03-12 20:55:16,933 - INFO - Columns: ('Hour', 'Num_of_bookings')
-2025-03-12 20:55:16,933 - INFO - (19, 2)
-2025-03-12 20:55:16,933 - INFO - (15, 1)
-2025-03-12 20:55:16,933 - INFO - (17, 1)
-2025-03-12 20:55:16,933 - INFO - (18, 1)
-2025-03-12 20:55:16,934 - INFO - (20, 1)
-2025-03-12 20:55:16,950 - INFO - Columns: ('GuestFullName', 'Status')
-2025-03-12 20:55:16,950 - INFO - ('Anna Iversen', None)
-2025-03-12 20:55:16,950 - INFO - ('Joakim Iversen', None)
-2025-03-12 20:55:16,950 - INFO - ('Vanessa McCarthy', 'Ready to serve')
-2025-03-12 20:55:16,950 - INFO - ('Marcos Romero', 'Preparing Order')
-2025-03-12 20:55:16,950 - INFO - ('Hiroki Yamane', None)
-2025-03-12 20:55:16,950 - INFO - ('Diana Pinto', None)
+2025-03-13 10:44:18,429 - INFO - Connected to the MySQL
+2025-03-13 10:44:18,429 - INFO - Adding guest: 0
+2025-03-13 10:44:18,444 - INFO - Adding guest: 1
+2025-03-13 10:44:18,450 - INFO - Adding guest: 2
+2025-03-13 10:44:18,456 - INFO - The name and EmployeeID of the Little Lemon manager: [('Mario Gollini', 1)]
+2025-03-13 10:44:18,456 - INFO - The name and role of the employee who receives the highest salary: [('John Millar', 'Receptionist')]
+2025-03-13 10:44:18,456 - INFO - The number of guests booked between 18:00 and 20:00: [(124,)]
+2025-03-13 10:44:18,457 - INFO - All guests waiting to be seated: [(3, 'Vanessa McCarthy'), (4, 'Marcos Romero'), (11, 'Anees Java'), (13, 'Anees Java'), (15, 'Anees Java'), (17, 'Anees Java'), (20, 'Anees Java'), (23, 'Anees Java'), (26, 'Anees Java'), (29, 'Anees Java'), (32, 'Anees Java'), (35, 'Anees Java'), (38, 'Anees Java'), (41, 'Anees Java'), (44, 'Anees Java'), (47, 'Anees Java'), (50, 'Anees Java'), (53, 'Anees Java'), (56, 'Anees Java'), (59, 'Anees Java'), (62, 'Anees Java'), (65, 'Anees Java'), (68, 'Anees Java'), (71, 'Anees Java'), (74, 'Anees Java'), (77, 'Anees Java'), (80, 'Anees Java'), (83, 'Anees Java'), (86, 'Anees Java'), (89, 'Anees Java'), (92, 'Anees Java'), (95, 'Anees Java'), (98, 'Anees Java'), (101, 'Anees Java'), (104, 'Anees Java'), (107, 'Anees Java'), (110, 'Anees Java'), (113, 'Anees Java'), (116, 'Anees Java'), (119, 'Anees Java'), (122, 'Anees Java'), (125, 'Anees Java'), (128, 'Anees Java'), (5, 'Hiroki Yamane'), (1, 'Anna Iversen'), (2, 'Joakim Iversen'), (12, 'Bald Vin'), (14, 'Bald Vin'), (16, 'Bald Vin'), (18, 'Bald Vin'), (21, 'Bald Vin'), (24, 'Bald Vin'), (27, 'Bald Vin'), (30, 'Bald Vin'), (33, 'Bald Vin'), (36, 'Bald Vin'), (39, 'Bald Vin'), (42, 'Bald Vin'), (45, 'Bald Vin'), (48, 'Bald Vin'), (51, 'Bald Vin'), (54, 'Bald Vin'), (57, 'Bald Vin'), (60, 'Bald Vin'), (63, 'Bald Vin'), (66, 'Bald Vin'), (69, 'Bald Vin'), (72, 'Bald Vin'), (75, 'Bald Vin'), (78, 'Bald Vin'), (81, 'Bald Vin'), (84, 'Bald Vin'), (87, 'Bald Vin'), (90, 'Bald Vin'), (93, 'Bald Vin'), (96, 'Bald Vin'), (99, 'Bald Vin'), (102, 'Bald Vin'), (105, 'Bald Vin'), (108, 'Bald Vin'), (111, 'Bald Vin'), (114, 'Bald Vin'), (117, 'Bald Vin'), (120, 'Bald Vin'), (123, 'Bald Vin'), (126, 'Bald Vin'), (129, 'Bald Vin'), (19, 'Jay Kon'), (22, 'Jay Kon'), (25, 'Jay Kon'), (28, 'Jay Kon'), (31, 'Jay Kon'), (34, 'Jay Kon'), (37, 'Jay Kon'), (40, 'Jay Kon'), (43, 'Jay Kon'), (46, 'Jay Kon'), (49, 'Jay Kon'), (52, 'Jay Kon'), (55, 'Jay Kon'), (58, 'Jay Kon'), (61, 'Jay Kon'), (64, 'Jay Kon'), (67, 'Jay Kon'), (70, 'Jay Kon'), (73, 'Jay Kon'), (76, 'Jay Kon'), (79, 'Jay Kon'), (82, 'Jay Kon'), (85, 'Jay Kon'), (88, 'Jay Kon'), (91, 'Jay Kon'), (94, 'Jay Kon'), (97, 'Jay Kon'), (100, 'Jay Kon'), (103, 'Jay Kon'), (106, 'Jay Kon'), (109, 'Jay Kon'), (112, 'Jay Kon'), (115, 'Jay Kon'), (118, 'Jay Kon'), (121, 'Jay Kon'), (124, 'Jay Kon'), (127, 'Jay Kon'), (130, 'Jay Kon'), (6, 'Diana Pinto')]
+2025-03-13 10:44:18,464 - INFO - Total sales: 243, avg sale: 48.6000, min bill paid: 37, max bill paid: 86
+2025-03-13 10:44:18,466 - INFO - Succesfully display 3 bookings
+2025-03-13 10:44:18,466 - INFO - Guest: 0 
+ Booking slot: 15:00:00 
+ guest name: Vanessa McCarthy
+ assigned to: Giorgos Dioudis [Head Chef] 
+2025-03-13 10:44:18,466 - INFO - Guest: 1 
+ Booking slot: 15:00:00 
+ guest name: Vanessa McCarthy
+ assigned to: Adrian Gollini [Assistant Manager] 
+2025-03-13 10:44:18,466 - INFO - Guest: 2 
+ Booking slot: 15:00:00 
+ guest name: Vanessa McCarthy
+ assigned to: Mario Gollini [Manager] 
